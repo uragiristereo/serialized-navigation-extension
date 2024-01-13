@@ -1,0 +1,42 @@
+plugins {
+    alias libs.plugins.android.library
+    alias libs.plugins.kotlin.android
+    alias libs.plugins.maven.publish
+}
+
+android {
+    namespace "com.uragiristereo.serializednavigationextension.runtime"
+
+    defaultConfig {
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
+}
+
+kotlin {
+    jvmToolchain(17)
+}
+
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId = "com.uragiristereo.serializednavigationextension"
+            artifactId = "runtime"
+            version = libs.versions.library.get()
+
+            afterEvaluate {
+                from components.release
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation libs.navigation.runtime
+}

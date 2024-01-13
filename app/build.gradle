@@ -1,0 +1,55 @@
+plugins {
+    alias libs.plugins.android.application
+    alias libs.plugins.kotlin.android
+    alias libs.plugins.kotlin.serialization
+}
+
+android {
+    namespace "com.uragiristereo.serializednavigationextension"
+
+    defaultConfig {
+        applicationId "com.uragiristereo.serializednavigationextension"
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+        }
+    }
+
+    buildFeatures {
+        viewBinding true
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
+    }
+}
+
+kotlin {
+    jvmToolchain(17)
+}
+
+dependencies {
+    implementation libs.androidx.core
+    implementation libs.appcompat
+    implementation libs.material
+
+    implementation libs.compose.ui
+    implementation libs.compose.material3
+    implementation libs.compose.ui.tooling.preview
+    implementation libs.androidx.activity.compose
+    debugImplementation libs.compose.ui.tooling
+    debugImplementation libs.compose.ui.test.manifest
+
+    implementation project(":navigation-compose")
+    implementation project(":navigation-fragment")
+    implementation project(":serializer-gson")
+    implementation project(":serializer-kotlinx")
+}

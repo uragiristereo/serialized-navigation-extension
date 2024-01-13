@@ -1,0 +1,40 @@
+plugins {
+    alias libs.plugins.android.library
+    alias libs.plugins.kotlin.android
+    alias libs.plugins.kotlin.serialization
+    alias libs.plugins.maven.publish
+}
+
+android {
+    namespace "com.uragiristereo.serializednavigationextension.serializer.kotlinx"
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
+}
+
+kotlin {
+    jvmToolchain(17)
+}
+
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId = "com.uragiristereo.serializednavigationextension"
+            artifactId = "serializer-kotlinx"
+            version = libs.versions.library.get()
+
+            afterEvaluate {
+                from components.release
+            }
+        }
+    }
+}
+
+dependencies {
+    api project(":runtime")
+    api libs.kotlinx.serialization.json
+}

@@ -1,0 +1,1 @@
+-keepnames class * implements com.uragiristereo.serializednavigationextension.runtime.NavRoute { *; }
