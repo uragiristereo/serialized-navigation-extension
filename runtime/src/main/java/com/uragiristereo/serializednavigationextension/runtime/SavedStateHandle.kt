@@ -27,6 +27,19 @@ inline fun <reified T : NavRoute> SavedStateHandle.navArgsFlowOf(initialValue: T
     }
 }
 
+inline fun <reified T : NavRoute> SavedStateHandle.navArgsFlowOf(): Flow<T?> {
+    return getStateFlow<String?>(
+        key = "args",
+        initialValue = null,
+    ).map { args ->
+        if (args != null) {
+            SneInstance.decode(args, T::class)
+        } else {
+            null
+        }
+    }
+}
+
 inline fun <reified T : NavRoute> SavedStateHandle.updateNavArgs(value: T) {
     this["args"] = SneInstance.encode(value, T::class)
 }
